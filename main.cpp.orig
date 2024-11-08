@@ -5,8 +5,7 @@
 #include "ImageProcessor.h"
 #include "GaussianFilter.h"
 
-int main()
-{
+int main() {
     std::string inputFilename = "input.bmp";
     std::string outputRotatedClockwise = "rotated_clockwise.bmp";
     std::string outputRotatedCounterclockwise = "rotated_counterclockwise.bmp";
@@ -14,8 +13,7 @@ int main()
 
     ImageProcessor imgProcessor;
 
-    try
-    {
+    try {
         imgProcessor.loadImage(inputFilename);
         imgProcessor.printMemoryUsage();
 
@@ -28,9 +26,7 @@ int main()
         auto filteredImage = applyGaussianFilter(rotatedClockwise);
         imgProcessor.saveBMP(filteredImage, outputFiltered);
 
-    }
-    catch (const std::exception &e)
-    {
+    } catch (const std::exception &e) {
         std::cerr << "Error:" << e.what() << std::endl;
         return 1;
     }

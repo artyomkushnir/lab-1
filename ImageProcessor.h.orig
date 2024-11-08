@@ -5,13 +5,11 @@
 #include <string>
 #include <stdexcept>
 
-struct Pixel
-{
+struct Pixel {
     unsigned char gray; // Оттенок серого
 };
 
-class ImageProcessor
-{
+class ImageProcessor {
 public:
     void loadImage(const std::string& filename);
     void printMemoryUsage() const;
