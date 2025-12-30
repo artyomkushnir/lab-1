@@ -1,5 +1,3 @@
-/* Artyom Kushnir st135665@student.spbu.ru
-*/
 #ifndef BMP_HEADER_HPP
 #define BMP_HEADER_HPP
 #include <iostream>
