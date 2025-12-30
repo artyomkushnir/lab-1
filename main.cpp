@@ -1,5 +1,3 @@
-/* Artyom Kushnir st135665@student.spbu.ru
-*/
 #include "bmp_reader.hpp"
 
 int main(int argc, char* argv[]) {
