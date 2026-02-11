@@ -140,15 +140,15 @@ BMPFile* rotateBMP90Counterclockwise(const BMPFile* original) {
 }
 
 float** createGauss(int size, float sigma) {
-    float** kernel = (float**)malloc(size * sizeof(float*)); //memory allocation for the array of pointers to kernel strings
+    float** kernel = (float**)malloc(size * sizeof(float*)); //память для массива указателей
     for (int i = 0; i < size; ++i) {
-        kernel[i] = (float*)malloc(size * sizeof(float)); //memory allocation for each kernel core
+        kernel[i] = (float*)malloc(size * sizeof(float)); //память для каждого ядра
     }
     float sum = 0.0f;
     int halfsize = size / 2; 
     
-    for (int y = -halfsize; y <= halfsize; ++y) { //vertical cycle of the Gaussian kernel
-        for (int x = -halfsize; x <= halfsize; ++x) { //cycle along the horizontal of the Gaussian kernel
+    for (int y = -halfsize; y <= halfsize; ++y) { //цикл длля размытия верт
+        for (int x = -halfsize; x <= halfsize; ++x) { //цикл для размытия гориз
             float value = exp(-(x*x + y*y) / (2.0f * sigma * sigma));
             kernel[y + halfsize][x + halfsize] = value;
         }
@@ -165,16 +165,16 @@ void apply_Gauss(BMPFile* bmp_file, float** kernel, int kernel_size) {
     int width = bmp_file->dhdr.width;
     int height = bmp_file->dhdr.height;
     
-    unsigned char* new_data = (unsigned char*)malloc(bmp_file->dhdr.data_size); //memory allocation for a new array of pixels with processed data
+    unsigned char* new_data = (unsigned char*)malloc(bmp_file->dhdr.data_size); //память для массива с размытой матрицой
     
     int half_kernel_size = kernel_size / 2;
-    int rowSize = ((width * bmp_file->dhdr.bits_per_pixel + 31) / 32) * 4; //determining the size of the image data string
+    int rowSize = ((width * bmp_file->dhdr.bits_per_pixel + 31) / 32) * 4; //размер обработанной матрицы
     
     for (int y = 0; y < height; ++y) {
         for (int x = 0; x < width; ++x) {
-            float new_red = 0.0f, new_green = 0.0f, new_blue = 0.0f; //Variables for new color channel values
+            float new_red = 0.0f, new_green = 0.0f, new_blue = 0.0f; 
             for (int ky = -half_kernel_size; ky <= half_kernel_size; ++ky) {
-                for (int kx = -half_kernel_size; kx <= half_kernel_size; ++kx) { //cycle to traverse all kernel pixels
+                for (int kx = -half_kernel_size; kx <= half_kernel_size; ++kx) { //цикл для перемещ пикселей ядра
                     int nx = std::min(std::max(x + kx, 0), width - 1);
                     int ny = std::min(std::max(y + ky, 0), height - 1);
                     
